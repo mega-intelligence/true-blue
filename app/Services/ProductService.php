@@ -65,6 +65,26 @@ class ProductService extends Service
     }
 
     /**
+     * @param array $attributes
+     * @return ProductService
+     * @throws ValidationException|Exception
+     */
+    public function update(array $attributes): Service
+    {
+        $this->modelOrFail();
+
+        $validated = $this->validate($attributes);
+
+        $product = $this->getModel();
+
+        $product->update($validated);
+
+        optional($product->sellable)->update($validated);
+
+        return $this;
+    }
+
+    /**
      * returns the number of available products
      * @return int
      */

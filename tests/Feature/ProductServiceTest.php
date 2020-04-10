@@ -127,4 +127,37 @@ class ProductServiceTest extends TestCase
         self::assertNull(Sellable::find($sellableId));
         self::assertNull(Product::find($productId));
     }
+
+    public function testUpdateProduct()
+    {
+        $product = $this->productService->create([
+            "label"    => "Product 1",
+            "price"    => 10.0,
+            "quantity" => 2,
+        ])->getModel();
+
+        $this->productService->update([
+            "label"    => "Product 2",
+            "price"    => 11.0,
+            "quantity" => 3,
+        ]);
+
+        self::assertEquals($product->sellable->label, "Product 2");
+        self::assertEquals($product->sellable->price, 11.0);
+        self::assertEquals($product->quantity, 3);
+
+
+        // Test validation -> should fail
+        try {
+            $this->productService->update([
+                "label"    => "",
+                "price"    => 11.0,
+                "quantity" => 3,
+            ]);
+
+            self::assertTrue(false, "false positive! invalid label passed the test.");
+        } catch (ValidationException $e) {
+            self::assertTrue(true);
+        }
+    }
 }
