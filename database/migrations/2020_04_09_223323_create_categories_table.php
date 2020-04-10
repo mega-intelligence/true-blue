@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSellablesTable extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateSellablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sellables', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string("label");
-            $table->decimal("price");
-            $table->unsignedBigInteger("sellable_id");
-            $table->unsignedBigInteger("category_id")->nullable();
-            $table->string("sellable_type");
+            $table->string("name");
+            $table->unsignedBigInteger("category_id")->nullable(); //parent category
             $table->timestamps();
 
             $table->foreign("category_id")->references("id")->on("categories")->onDelete("set null");
@@ -33,6 +30,6 @@ class CreateSellablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sellables');
+        Schema::dropIfExists('product_categories');
     }
 }

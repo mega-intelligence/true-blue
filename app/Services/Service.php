@@ -70,7 +70,9 @@ abstract class Service
     {
         $this->modelOrFail();
 
-        $this->model->update($attributes);
+        $validated = $this->validate($attributes);
+
+        $this->model->update($validated);
 
         return $this;
     }
@@ -140,7 +142,7 @@ abstract class Service
     protected function validationRulesOrFail()
     {
         if (is_null($this->validationRules))
-            throw new Exception('No validation rules has been defined, before validation attempt,
-             set the $validationRules array or initialize it with empty array explicitly');
+            throw new Exception('No validation rules has been defined, before validation attempt, override "protected $validationRules" or
+             setValidationRules(array $validationRules) or initialize it explicitly with empty array');
     }
 }

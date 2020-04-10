@@ -11,6 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class ProductService extends Service
 {
+    protected $validationRules = [
+        "label"    => "required|string|max:128",
+        "price"    => "required|numeric|min:0",
+        "quantity" => "nullable|int",
+    ];
 
     /**
      * ProductService constructor.
@@ -21,12 +26,6 @@ class ProductService extends Service
         if ($product) {
             $this->setModel($product);
         }
-
-        $this->validationRules = [
-            "label"    => "required|string|max:128",
-            "price"    => "required|numeric|min:0",
-            "quantity" => "nullable|int",
-        ];
     }
 
     /**
@@ -40,9 +39,9 @@ class ProductService extends Service
     {
         $validated = $this->validate($attributes);
 
-        $product = Product::create($attributes);
+        $product = Product::create($validated);
 
-        $product->sellable()->create($attributes);
+        $product->sellable()->create($validated);
 
         $this->setModel($product);
 
