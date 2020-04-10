@@ -9,6 +9,15 @@
 
 .logo-text {
     font-family: 'Cinzel Decorative', cursive;
+    text-align: center;
+    font-weight: 900;
+    color: $dark;
+    text-decoration: none;
+
+    :hover {
+        text-decoration: none !important;
+        /*some comment*/
+    }
 }
 
 .true-blue {
