@@ -6,6 +6,8 @@ namespace App\Services;
 
 use Illuminate\Database\Eloquent\Model;
 use Exception;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 
 abstract class Service
 {
@@ -13,6 +15,11 @@ abstract class Service
      * @var Model|null
      */
     private $model = null;
+
+    /**
+     * @var array|null
+     */
+    protected $validationRules = null;
 
     /**
      * Alias for the setModel function
@@ -83,12 +90,57 @@ abstract class Service
     }
 
     /**
+     * @param array $attributes
+     * @return array
+     * @throws ValidationException|Exception
+     */
+    public function validate(array $attributes): array
+    {
+        $this->validationRulesOrFail();
+
+        $validator = validator()->make($attributes, $this->validationRules);
+
+        if ($validator->fails())
+            throw new ValidationException($validator, null, $validator->errors());
+
+        return $validator->validated();
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getValidationRules(): ?array
+    {
+        return $this->validationRules;
+    }
+
+    /**
+     * @param array|null $validationRules
+     */
+    public function setValidationRules(?array $validationRules): void
+    {
+        $this->validationRules = $validationRules;
+    }
+
+
+    /**
      * Checks if a model is selected before any model specific operation, if not, it throws an exception
      * @throws Exception
      */
-    private function modelOrFail()
+    protected function modelOrFail()
     {
         if (is_null($this->model))
             throw new Exception('Model for this service is not set, use for($model) or setModel($model) to set a target model.');
+    }
+
+    /**
+     * Checks if there is any validation rules defined for the current model
+     * @throws Exception
+     */
+    protected function validationRulesOrFail()
+    {
+        if (is_null($this->validationRules))
+            throw new Exception('No validation rules has been defined, before validation attempt,
+             set the $validationRules array or initialize it with empty array explicitly');
     }
 }
