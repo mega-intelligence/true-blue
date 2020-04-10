@@ -1,6 +1,16 @@
 // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
 // Variables
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+.logo-text {
+    font-family: 'Cinzel Decorative', cursive;
+}
+
+.true-blue {
+    color: $true-blue;
+}
