@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Product;
+use App\Sellable;
 use App\Services\ProductService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -103,5 +104,27 @@ class ProductServiceTest extends TestCase
         self::assertEquals(10.0, $product->sellable->price);
         self::assertEquals(2, $product->quantity);
 
+    }
+
+    public function testDeleteProduct()
+    {
+
+        $product = $this->productService->create([
+            "label"    => "Product 1",
+            "price"    => 10.0,
+            "quantity" => 2,
+        ])->getModel();
+        $sellable = $product->sellable;
+
+        $sellableId = $sellable->id;
+        $productId = $product->id;
+
+        self::assertEquals($sellableId, Sellable::find($sellableId)->id);
+        self::assertEquals($productId, product::find($productId)->id);
+
+        $this->productService->delete();
+
+        self::assertNull(Sellable::find($sellableId));
+        self::assertNull(Product::find($productId));
     }
 }

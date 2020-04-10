@@ -12,7 +12,6 @@ use Illuminate\Validation\ValidationException;
 class ProductService extends Service
 {
 
-
     /**
      * ProductService constructor.
      * @param Product|null $product
@@ -30,7 +29,6 @@ class ProductService extends Service
         ];
     }
 
-
     /**
      * creates and selects a new model
      * @param array $attributes
@@ -47,6 +45,21 @@ class ProductService extends Service
         $product->sellable()->create($attributes);
 
         $this->setModel($product);
+
+        return $this;
+    }
+
+    /**
+     * @return ProductService
+     * @throws Exception
+     */
+    public function delete(): Service
+    {
+        $this->modelOrFail();
+
+        optional($this->getModel()->sellable)->delete();
+
+        $this->getModel()->delete();
 
         return $this;
     }
