@@ -92,7 +92,6 @@ class CategoryServiceTest extends TestCase
      */
     public function testCategoryValidation()
     {
-
         try {
             $this->categoryService->validate([
                 "name" => "",
@@ -129,5 +128,32 @@ class CategoryServiceTest extends TestCase
         } catch (ValidationException $e) {
             self::assertTrue(false, "false positive! a valid category was not accepted as parent category.");
         }
+    }
+
+    public function testParentCategories()
+    {
+
+        $category = $this->categoryService->create([
+            "name" => "Category 1",
+        ])->getModel();
+
+        $category2 = $this->categoryService->create([
+            "name" => "Category 2",
+        ])->getModel();
+
+        $this->categoryService->setParentCategory($category);
+
+        $this->assertEquals($category2->category_id, $category->id);
+
+        $this->assertNotNull($category2->category);
+
+        $this->assertNotEquals(0, $category->categories->count());
+
+        $this->categoryService->setAsRootCategory();
+
+        $category2->refresh();
+
+        $this->assertNull($category2->category);
+
     }
 }
