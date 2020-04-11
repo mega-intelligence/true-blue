@@ -34,7 +34,6 @@ class ProductServiceTest extends TestCase
         $this->productService->validate([
             "label"    => "",
             "price"    => 10.0,
-            "quantity" => 0,
         ]);
     }
 
@@ -45,26 +44,8 @@ class ProductServiceTest extends TestCase
         $this->productService->validate([
             "label"    => "Product",
             "price"    => -1,
-            "quantity" => 0,
         ]);
 
-    }
-
-    /**
-     * Product validation test
-     *
-     * @return void
-     * @throws ValidationException
-     */
-    public function testQuantityIsNumeric()
-    {
-        $this->expectException(ValidationException::class);
-
-        $this->productService->validate([
-            "label"    => "Product",
-            "price"    => -1,
-            "quantity" => "text",
-        ]);
     }
 
     /**
@@ -77,7 +58,6 @@ class ProductServiceTest extends TestCase
         self::assertEquals($count + 1, $this->productService->create([
             "label"    => "Product 1",
             "price"    => 10.0,
-            "quantity" => 2,
         ])->count());
     }
 
@@ -86,12 +66,10 @@ class ProductServiceTest extends TestCase
         $product = $this->productService->create([
             "label"    => "Product 1",
             "price"    => 10.0,
-            "quantity" => 2,
         ])->getModel();
 
         self::assertEquals("Product 1", $product->sellable->label);
         self::assertEquals(10.0, $product->sellable->price);
-        self::assertEquals(2, $product->quantity);
 
     }
 
@@ -101,7 +79,6 @@ class ProductServiceTest extends TestCase
         $product = $this->productService->create([
             "label"    => "Product 1",
             "price"    => 10.0,
-            "quantity" => 2,
         ])->getModel();
         $sellable = $product->sellable;
 
@@ -124,24 +101,20 @@ class ProductServiceTest extends TestCase
         $product = $this->productService->create([
             "label"    => "Product 1",
             "price"    => 10.0,
-            "quantity" => 2,
         ])->getModel();
 
         $this->productService->update([
             "label"    => "Product 2",
             "price"    => 11.0,
-            "quantity" => 3,
         ]);
 
         self::assertEquals($product->sellable->label, "Product 2");
         self::assertEquals($product->sellable->price, 11.0);
-        self::assertEquals($product->quantity, 3);
 
 
         $this->productService->update([
             "label"    => "",
             "price"    => 11.0,
-            "quantity" => 3,
         ]);
     }
 }

@@ -20,8 +20,6 @@ class ProductService extends SellableService
         if ($product) {
             $this->setModel($product);
         }
-
-        $this->appendValidationRules(["quantity" => "nullable|int"]);
     }
 
     /**

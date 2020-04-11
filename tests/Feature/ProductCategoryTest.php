@@ -45,7 +45,6 @@ class ProductCategoryTest extends TestCase
         $this->productService->create([
             'label'    => 'Product 1',
             'price'    => 10.00,
-            'quantity' => 3,
         ]);
 
         $this->categoryService->create(["name" => "Category 1"]);
@@ -55,6 +54,24 @@ class ProductCategoryTest extends TestCase
         self::assertEquals($this->categoryService->getModel()->id, $this->productService->getModel()->sellable->category_id);
 
         $this->categoryService->detachProduct($this->productService->getModel());
+
+        self::assertNull($this->productService->getModel()->sellable->category);
+    }
+
+    public function testNullWhenCategoryDeleted()
+    {
+        $this->productService->create([
+            'label' => 'Product 1',
+            'price' => 10.00,
+        ]);
+
+        $this->categoryService->create(["name" => "Category 1"]);
+
+        $this->categoryService->attachProduct($this->productService->getModel());
+
+        self::assertEquals($this->categoryService->getModel()->id, $this->productService->getModel()->sellable->category_id);
+
+        $this->categoryService->delete();
 
         self::assertNull($this->productService->getModel()->sellable->category);
     }
