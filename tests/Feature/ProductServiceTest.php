@@ -27,55 +27,44 @@ class ProductServiceTest extends TestCase
 
     }
 
+    public function testLabelIsRequired()
+    {
+        $this->expectException(ValidationException::class);
+
+        $this->productService->validate([
+            "label"    => "",
+            "price"    => 10.0,
+            "quantity" => 0,
+        ]);
+    }
+
+    public function testPriceIsPositive()
+    {
+        $this->expectException(ValidationException::class);
+
+        $this->productService->validate([
+            "label"    => "Product",
+            "price"    => -1,
+            "quantity" => 0,
+        ]);
+
+    }
+
     /**
      * Product validation test
      *
      * @return void
      * @throws ValidationException
      */
-    public function testProductValidation()
+    public function testQuantityIsNumeric()
     {
+        $this->expectException(ValidationException::class);
 
-        self::assertIsArray($this->productService->validate([
-            "label"    => "Product 1",
-            "price"    => 10.0,
-            "quantity" => 0,
-        ]));
-
-        try {
-            $this->productService->validate([
-                "label"    => "",
-                "price"    => 10.0,
-                "quantity" => 0,
-            ]);
-            self::assertTrue(false, "false positive! invalid label passed the test.");
-        } catch (ValidationException $e) {
-            self::assertTrue(true);
-        }
-
-        try {
-            $this->productService->validate([
-                "label"    => "Product",
-                "price"    => -1,
-                "quantity" => 0,
-            ]);
-
-            self::assertTrue(false, "false positive! invalid price passed the test.");
-        } catch (ValidationException $e) {
-            self::assertTrue(true);
-        }
-
-        try {
-            $this->productService->validate([
-                "label"    => "Product",
-                "price"    => -1,
-                "quantity" => "text",
-            ]);
-
-            self::assertTrue(false, "false positive! invalid quantity passed the test.");
-        } catch (ValidationException $e) {
-            self::assertTrue(true);
-        }
+        $this->productService->validate([
+            "label"    => "Product",
+            "price"    => -1,
+            "quantity" => "text",
+        ]);
     }
 
     /**
@@ -130,6 +119,8 @@ class ProductServiceTest extends TestCase
 
     public function testUpdateProduct()
     {
+        $this->expectException(ValidationException::class);
+
         $product = $this->productService->create([
             "label"    => "Product 1",
             "price"    => 10.0,
@@ -147,17 +138,10 @@ class ProductServiceTest extends TestCase
         self::assertEquals($product->quantity, 3);
 
 
-        // Test validation -> should fail
-        try {
-            $this->productService->update([
-                "label"    => "",
-                "price"    => 11.0,
-                "quantity" => 3,
-            ]);
-
-            self::assertTrue(false, "false positive! invalid label passed the test.");
-        } catch (ValidationException $e) {
-            self::assertTrue(true);
-        }
+        $this->productService->update([
+            "label"    => "",
+            "price"    => 11.0,
+            "quantity" => 3,
+        ]);
     }
 }

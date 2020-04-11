@@ -30,18 +30,14 @@ class CategoryServiceTest extends TestCase
 
     public function testCategoryCanNotBeParentToItSelf()
     {
+
+        $this->expectException(ValidationException::class);
+
         $category = $this->categoryService->create([
             "name" => "Category 1",
         ])->getModel();
 
-        try {
-
-            $this->categoryService->update(['category_id' => $category->id]);
-
-            self::assertTrue(false, "true negative! a category can not be parent to it self");
-        } catch (ValidationException $e) {
-            self::assertTrue(true);
-        }
+        $this->categoryService->update(['category_id' => $category->id]);
 
     }
 
@@ -84,50 +80,37 @@ class CategoryServiceTest extends TestCase
         self::assertEquals($initialCategoryCount + 1, Category::count());
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     * @throws Exception
-     */
-    public function testCategoryValidation()
+
+    public function testNameIsRequired()
     {
-        try {
-            $this->categoryService->validate([
-                "name" => "",
-            ]);
+        $this->expectException(ValidationException::class);
 
-            self::assertTrue(false, "false positive! invalid name passed the test.");
-        } catch (ValidationException $e) {
-            self::assertTrue(true);
-        }
+        $this->categoryService->validate([
+            "name" => "",
+        ]);
+    }
 
-        try {
-            $this->categoryService->validate([
-                "name"        => "test",
-                "category_id" => -1,
-            ]);
+    public function testCategoryIdPositive()
+    {
+        $this->expectException(ValidationException::class);
 
-            self::assertTrue(false, "false positive! invalid name passed the test.");
-        } catch (ValidationException $e) {
-            self::assertTrue(true);
-        }
+        $this->categoryService->validate([
+            "name"        => "test",
+            "category_id" => -1,
+        ]);
+    }
 
+    public function testCategoryParentExists()
+    {
+        $this->expectException(ValidationException::class);
 
-        $category = $this->categoryService->create([
-            "name" => "Category 1",
-        ])->getModel();
+        $NON_EXISTING_CATEGORY_ID = 10;
 
-        try {
-            $this->categoryService->validate([
-                "name"        => "test",
-                "category_id" => $category->id,
-            ]);
+        $this->categoryService->validate([
+            "name"        => "test",
+            "category_id" => $NON_EXISTING_CATEGORY_ID,
+        ]);
 
-            self::assertTrue(true);
-        } catch (ValidationException $e) {
-            self::assertTrue(false, "false positive! a valid category was not accepted as parent category.");
-        }
     }
 
     public function testParentCategories()
@@ -155,5 +138,65 @@ class CategoryServiceTest extends TestCase
 
         $this->assertNull($category2->category);
 
+    }
+
+    public function testAttachCategory()
+    {
+        $category = $this->categoryService->create([
+            "name" => "Category 1",
+        ])->getModel();
+
+        $category2 = $this->categoryService->create([
+            "name" => "Category 2",
+        ])->getModel();
+
+        $this->categoryService->for($category)->attachCategory($category2);
+
+        $this->assertEquals($category2->category_id, $category->id);
+
+        $this->assertNotNull($category2->category);
+
+        $this->assertNotEquals(0, $category->categories->count());
+
+        $this->categoryService->for($category2)->setAsRootCategory();
+
+        $category2->refresh();
+
+        $this->assertNull($category2->category);
+    }
+
+    public function testValidationRulesExistsForParentCategory()
+    {
+        $this->expectException(Exception::class);
+        $category = $this->categoryService->create([
+            "name" => "Category 1",
+        ])->getModel();
+
+        $category2 = $this->categoryService->create([
+            "name" => "Category 2",
+        ])->getModel();
+
+        $this->categoryService->setValidationRules([]);
+
+        $this->categoryService->setParentCategory($category);
+
+        $this->categoryService = new CategoryService();
+    }
+
+    public function testCategoryExistsForParentCategory()
+    {
+        $this->expectException(ValidationException::class);
+        $category = $this->categoryService->create([
+            "name" => "Category 1",
+        ])->getModel();
+
+        $category2 = $this->categoryService->create([
+            "name" => "Category 2",
+        ])->getModel();
+        $NON_EXISTING_CATEGORY_ID = 10;
+
+        $category->id = $NON_EXISTING_CATEGORY_ID;
+
+        $this->categoryService->setParentCategory($category);
     }
 }
