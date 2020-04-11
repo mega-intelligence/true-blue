@@ -5,13 +5,17 @@ namespace App\Services;
 
 
 use App\Category;
+use App\Product;
+use App\Sellable;
+use Exception;
+use Illuminate\Container\Container;
 use Illuminate\Validation\ValidationException;
 
 class CategoryService extends Service
 {
     protected $validationRules = [
         "name"        => "required|string|max:128",
-        "category_id" => "nullable|exists:categories,id",
+        "category_id" => "nullable|different:id|exists:categories,id",
     ];
 
     /**
@@ -38,6 +42,30 @@ class CategoryService extends Service
         $category = Category::create($validated);
 
         $this->setModel($category);
+
+        return $this;
+    }
+
+    /**
+     * @param Product $product
+     * @return CategoryService
+     * @throws Exception
+     */
+    public function attachProduct(Product $product): CategoryService
+    {
+        (new ProductService($product))->addToCategory($this->getModel());
+
+        return $this;
+    }
+
+    /**
+     * @param Product $product
+     * @return CategoryService
+     * @throws Exception
+     */
+    public function detachProduct(Product $product): CategoryService
+    {
+        (new ProductService($product))->clearCategory();
 
         return $this;
     }

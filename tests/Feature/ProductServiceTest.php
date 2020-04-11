@@ -28,7 +28,7 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * Product validation test
      *
      * @return void
      * @throws ValidationException

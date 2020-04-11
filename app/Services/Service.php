@@ -124,6 +124,22 @@ abstract class Service
         $this->validationRules = $validationRules;
     }
 
+    /**
+     * extends the validation rules that were defined in the parent class
+     * @param array $otherValidationRules
+     * @return Service
+     */
+    public function appendValidationRules(array $otherValidationRules): Service
+    {
+        if (is_null($this->validationRules)) {
+            $this->validationRules = $otherValidationRules;
+            return $this;
+        }
+
+        $this->setValidationRules(array_merge($this->validationRules, $otherValidationRules));
+
+        return $this;
+    }
 
     /**
      * Checks if a model is selected before any model specific operation, if not, it throws an exception

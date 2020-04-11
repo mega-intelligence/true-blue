@@ -12,4 +12,9 @@ class Product extends Model
     {
         return $this->morphOne(Sellable::class, 'sellable');
     }
+
+    public function category()
+    {
+        return $this->sellable->category();
+    }
 }

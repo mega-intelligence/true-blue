@@ -9,14 +9,8 @@ use App\Sellable;
 use Exception;
 use Illuminate\Validation\ValidationException;
 
-class ProductService extends Service
+class ProductService extends SellableService
 {
-    protected $validationRules = [
-        "label"    => "required|string|max:128",
-        "price"    => "required|numeric|min:0",
-        "quantity" => "nullable|int",
-    ];
-
     /**
      * ProductService constructor.
      * @param Product|null $product
@@ -26,6 +20,8 @@ class ProductService extends Service
         if ($product) {
             $this->setModel($product);
         }
+
+        $this->appendValidationRules(["quantity" => "nullable|int"]);
     }
 
     /**
