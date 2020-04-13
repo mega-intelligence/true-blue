@@ -15,7 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string("reference")->unique();
+            $table->string("reference")->nullable()->unique();
             $table->dateTime("delivered_at")->nullable();
             $table->dateTime("paid_at")->nullable();
             $table->decimal("amount")->nullable();

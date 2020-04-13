@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+
+    protected $dates = ["delivered_at", "paid_at"];
+
+    protected $casts = [
+        "is_draft" => "bool",
+    ];
+
     /*
      * An order should contain the following information:
      * total amount
