@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\NoDefaultVatException;
 use App\Services\VatService;
 use App\Vat;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -60,7 +61,7 @@ class VatServiceTest extends TestCase
 
         self::assertEquals(0.4, $this->vatService->getModel()->value);
 
-        $this->vatService->update(["value" => .4, "id_default" => true]);
+        $this->vatService->update(["value" => .4, "is_default" => true]);
 
         self::assertEquals($this->vatService->getModel()->id, $this->vatService->getDefaultVat()->id);
 
@@ -71,5 +72,16 @@ class VatServiceTest extends TestCase
     {
         $this->expectException(ValidationException::class);
         $this->vatService->validate(["value" => 2]);
+    }
+
+    public function testDefaultVatExists()
+    {
+        $this->expectException(NoDefaultVatException::class);
+        $vat = $this->vatService->create(["value" => .3, "is_default" => true])->getModel();
+
+        $vat->is_default = false;
+        $vat->save();
+
+        $this->vatService->getDefaultVat();
     }
 }
