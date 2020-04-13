@@ -7,7 +7,6 @@ namespace App\Services;
 use App\Exceptions\OrderReferenceAlreadyGeneratedException;
 use App\Order;
 use Illuminate\Validation\ValidationException;
-use mysql_xdevapi\Exception;
 
 class OrderService extends Service
 {
@@ -26,7 +25,6 @@ class OrderService extends Service
         }
 
     }
-
 
     /**
      * Creates and selects a new model

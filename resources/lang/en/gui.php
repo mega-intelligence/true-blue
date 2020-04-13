@@ -1,5 +1,8 @@
 <?php
 
 return [
-    "products" => "Products",
+    "dashboard"  => "Dashboard",
+    "categories" => "Categories",
+    "products"   => "Products",
+    "orders"     => "Orders",
 ];
