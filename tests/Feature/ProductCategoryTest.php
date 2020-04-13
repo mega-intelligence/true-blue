@@ -32,6 +32,8 @@ class ProductCategoryTest extends TestCase
 
         $this->categoryService = new CategoryService();
 
+        $this->seed();
+
     }
 
     /**

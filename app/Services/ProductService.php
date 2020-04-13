@@ -35,6 +35,11 @@ class ProductService extends SellableService
 
         $product = Product::create($validated);
 
+        if (!key_exists("vat_id", $validated)) {
+            $defaultVat = (new VatService())->getDefaultVat();
+            $validated["vat_id"] = $defaultVat->id;
+        }
+
         $product->sellable()->create($validated);
 
         $this->setModel($product);

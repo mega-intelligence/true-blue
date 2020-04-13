@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use App\Product;
 use App\Sellable;
 use App\Services\ProductService;
+use App\Services\VatService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
@@ -18,13 +20,16 @@ class ProductServiceTest extends TestCase
      * @var ProductService
      */
     protected $productService;
+    protected $vatService;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->productService = new ProductService();
+        $this->vatService = new VatService();
 
+        $this->seed();
     }
 
     public function testLabelIsRequired()
@@ -116,5 +121,30 @@ class ProductServiceTest extends TestCase
             "label"    => "",
             "price"    => 11.0,
         ]);
+    }
+
+    public function testSetVatValue()
+    {
+        $this->expectException(ModelNotFoundException::class);
+
+        $vat = $this->vatService->create(["value" => .7])->getModel();
+        $this->productService->create([
+            "label" => "Product 1",
+            "price" => 10.0,
+        ])->getModel();
+
+        $this->productService->setVat($vat);
+
+        $this->assertEquals($vat->id, $this->productService->getVat()->id);
+
+        $this->productService->create([
+            "label" => "Product 2",
+            "price" => 10.0,
+        ])->getModel();
+
+        $vat->delete();
+
+        $this->productService->setVat($vat);
+
     }
 }

@@ -31,6 +31,8 @@ class WarehouseServiceTest extends TestCase
 
         $this->warehouseService = new WarehouseService();
         $this->productService = new ProductService();
+
+        $this->seed();
     }
 
     public function testCreateWarehouse()

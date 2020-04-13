@@ -17,6 +17,7 @@ class CreateSellablesTable extends Migration
             $table->id();
             $table->string("label");
             $table->decimal("price");
+            $table->unsignedBigInteger("vat_id");
             $table->unsignedBigInteger("sellable_id");
             $table->unsignedBigInteger("category_id")->nullable();
             $table->string("sellable_type");
