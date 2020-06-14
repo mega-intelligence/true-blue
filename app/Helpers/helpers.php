@@ -6,7 +6,7 @@
  */
 function activatePage(string $page): void
 {
-    session()->flash('active_page', $page);
+    session()->flash(ACTIVE_PAGE_SESSION_KEY, $page);
 }
 
 /**
@@ -16,5 +16,5 @@ function activatePage(string $page): void
  */
 function activateClass(string $pageToTest): string
 {
-    return session('active_page') === $pageToTest ? 'active' : '';
+    return session(ACTIVE_PAGE_SESSION_KEY) === $pageToTest ? 'active' : '';
 }
