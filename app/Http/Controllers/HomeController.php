@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        activatePage('backend.home');
+
         return view('home');
     }
 }
