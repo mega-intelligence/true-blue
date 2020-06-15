@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -11,6 +12,6 @@ class ProductController extends Controller
     {
         activatePage('backend.product.index');
 
-        return view('home');
+        return view('backend.product.index');
     }
 }

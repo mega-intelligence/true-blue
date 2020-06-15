@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/dashboard';
+    public const HOME = '/backend/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -45,6 +45,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
+        $this->mapBackendWebRoutes();
 
         //
     }
@@ -76,5 +77,15 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+
+    protected function mapBackendWebRoutes()
+    {
+        Route::middleware(['web', 'auth'])
+            ->namespace($this->namespace . '\Backend')
+            ->prefix('backend')
+            ->name("backend.")
+            ->group(base_path('routes/web/backend/backend.php'));
     }
 }
