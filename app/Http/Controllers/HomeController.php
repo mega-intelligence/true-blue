@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ViewContext;
-use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,12 +19,12 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return Renderable
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        $viewContext = new ViewContext("dashboard");
+        activatePage('backend.home');
 
-        return view('dashboard', compact('viewContext'));
+        return view('home');
     }
 }

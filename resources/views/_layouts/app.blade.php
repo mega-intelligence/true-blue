@@ -36,24 +36,7 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ activeClassIfActive("dashboard", $viewContext->activePage ?? null ) }}"
-                           href="/">@lang('gui.dashboard')</a>
-                    </li>
-                    <li class="nav-item"><a
-                            class="nav-link {{ activeClassIfActive("categories", $viewContext->activePage ?? null ) }}"
-                            href="/">@lang('gui.categories')</a>
-                    </li>
-                    <li class="nav-item"><a
-                            class="nav-link {{ activeClassIfActive("product", $viewContext->activePage ?? null ) }}"
-                            href="/">@lang('gui.products')</a>
-                    </li>
-                    <li class="nav-item"><a
-                            class="nav-link {{ activeClassIfActive("order", $viewContext->activePage ?? null ) }}"
-                            href="/">@lang('gui.orders')</a>
-                    </li>
-                </ul>
+                @include('_partials.navigation.top-nav')
 
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
