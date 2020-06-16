@@ -58,17 +58,17 @@ class WarehouseService extends Service
     /**
      * Adds a product quantity to the selected warehouse
      * @param Product $product
-     * @param int $quntity
+     * @param int $quantity
      * @return WarehouseService
      * @throws Exception
      */
-    public function addProduct(Product $product, int $quntity = 1): WarehouseService
+    public function addProduct(Product $product, int $quantity = 1): WarehouseService
     {
         $this->modelOrFail();
 
         $existingQuantity = $this->getProductQuantity($product);
 
-        $this->getModel()->products()->syncwithoutdetaching([$product->id => ["quantity" => $existingQuantity + $quntity]]);
+        $this->getModel()->products()->syncwithoutdetaching([$product->id => ["quantity" => $existingQuantity + $quantity]]);
 
         return $this;
     }
@@ -95,6 +95,12 @@ class WarehouseService extends Service
         return $this;
     }
 
+    /**
+     * Gets the list of all the product in the warehouse
+     * @param bool $availableOnly
+     * @return Collection|null
+     * @throws Exception
+     */
     public function getProducts(bool $availableOnly = false): ?Collection
     {
         $this->modelOrFail();
