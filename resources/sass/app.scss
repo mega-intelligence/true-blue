@@ -4,7 +4,7 @@
 // Variables
 @import 'variables';
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
 
 
 .logo-text {
@@ -13,6 +13,7 @@
     font-weight: 900;
     color: $dark;
     text-decoration: none;
+    font-size: 1.3rem;
 
     :hover {
         text-decoration: none !important;
