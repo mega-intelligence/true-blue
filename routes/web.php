@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('_layout');
+    return redirect()->route('backend.dashboard');
 });
 
 Auth::routes();
