@@ -1,31 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <meta charset="UTF-8">
     <title>{{ config('app.name', 'True Blue software') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <link rel="icon" type="image/png" href="{{ asset("favicon.png") }}">
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <meta name="css-path" content="{{ asset('css/') }}">
 
-    <!-- Styles -->
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset("font/iconsmind-s/css/iconsminds.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("font/simple-line-icons/css/simple-line-icons.css") }}"/>
+
+    <link rel="stylesheet" href="{{ asset("css/vendor/bootstrap.min.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("css/vendor/bootstrap.rtl.only.min.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("css/vendor/bootstrap-float-label.min.css") }}"/>
+    <link rel="stylesheet" href="{{ asset("css/main.css") }}"/>
+    <link rel="stylesheet" href="{{ mix("css/app.css") }}">
 </head>
-<body>
-<div id="app">
-    <p class="logo-text display-4 m-3 mt-5">True <span class="true-blue">Blue</span></p>
-    <main class="py-4">
-        @yield('content')
-    </main>
-</div>
+
+<body class="background show-spinner no-footer">
+<div class="fixed-background"></div>
+<main>
+    <div class="container">
+        <div class="row h-100">
+            <div class="col-12 col-md-10 mx-auto my-auto">
+                <div class="card auth-card">
+                    <div class="position-relative image-side ">
+
+                        <p class=" text-white h2">@yield('title')</p>
+
+                        <p class="white mb-0">
+                            @yield('description')
+                        </p>
+                    </div>
+                    <div class="form-side">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="{{ asset("js/vendor/jquery-3.3.1.min.js") }}"></script>
+<script src="{{ asset("js/vendor/bootstrap.bundle.min.js") }}"></script>
+<script src="{{ asset("js/dore.script.js") }}"></script>
+<script src="{{ asset("js/scripts.js") }}"></script>
 </body>
+
 </html>
