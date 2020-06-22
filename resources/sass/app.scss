@@ -1,25 +1,25 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
-// Variables
-@import 'variables';
-// Bootstrap
-// @import '~bootstrap/scss/bootstrap';
+@import "~tailwindcss/base";
+@import "~tailwindcss/components";
+@import "~tailwindcss/utilities";
+
+$true-blue: #0088ff;
 
 .logo-text {
     font-family: 'Cinzel Decorative', cursive;
     text-align: center;
     font-weight: 900;
-    color: $dark;
+    color: #333333;
     text-decoration: none;
     font-size: 1.3rem;
 
     :hover {
         text-decoration: none !important;
-        /*some comment*/
     }
 }
 
 .true-blue {
     color: $true-blue;
 }
+

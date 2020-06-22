@@ -7,4 +7,6 @@ return [
     "orders"     => "Orders",
     "inventory"  => "Inventory",
     "warehouses" => "Warehouses",
+    "logout"     => "Logout",
+    "settings"   => "Settings",
 ];
