@@ -1,15 +1,5 @@
 @extends('_layouts.app-minimal')
 
-@section('title')
-    {{ __("Password reset email ") }}
-@endsection
-
-@section('description')
-    Please provide the email where <br>
-    you want to receive the password reset <br>
-    information
-@endsection
-
 @section('content')
     <form method="POST" action="{{ route('password.email') }}">
         @csrf

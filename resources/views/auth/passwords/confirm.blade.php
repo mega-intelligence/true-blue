@@ -1,13 +1,5 @@
 @extends('_layouts.app-minimal')
 
-@section('title')
-    {{ __('Confirm Password') }}
-@endsection
-
-@section('description')
-    {{ __('Please confirm your password before continuing.') }}
-@endsection
-
 @section('content')
     <form method="POST" action="{{ route('password.confirm') }}">
         @csrf

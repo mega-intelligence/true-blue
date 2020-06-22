@@ -1,15 +1,5 @@
 @extends('_layouts.app-minimal')
 
-
-@section('title')
-    Register
-@endsection
-
-@section('description')
-    Please provide the necessary information <br>for the registration
-@endsection
-
-
 @section('content')
     <form method="POST" action="{{ route('register') }}">
         @csrf

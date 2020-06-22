@@ -1,13 +1,5 @@
 @extends('_layouts.app-minimal')
 
-@section('title')
-    Login
-@endsection
-
-@section('description')
-    Please provide the necessary information <br>for the login
-@endsection
-
 @section('content')
 
 

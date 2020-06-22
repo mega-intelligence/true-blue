@@ -1,13 +1,5 @@
 @extends('_layouts.app-minimal')
 
-@section('title')
-    Email verification
-@endsection
-
-@section('description')
-    Please verify your email
-@endsection
-
 @section('content')
     <div class="card">
         <div class="card-header">{{ __('Verify Your Email Address') }}</div>

@@ -1,13 +1,5 @@
 @extends('_layouts.app-minimal')
 
-@section('title')
-    {{ __('Reset Password') }}
-@endsection
-
-@section('description')
-    Password reset
-@endsection
-
 @section('content')
     <form method="POST" action="{{ route('password.update') }}">
         @csrf
