@@ -15,9 +15,9 @@
             <span class="logo-text">True <span class="true-blue">Blue</span></span>
         </a>
     </div>
-    <hr>
+    <hr class="border-gray-700">
     @auth
-        <form class="pb-3" action="{{ route('logout') }}">
+        <form class="py-3" action="{{ route('logout') }}">
             @csrf
             <button class="btn">@lang('gui.logout')</button>
         </form>
@@ -28,7 +28,15 @@
     </ul>
 </nav>
 <main class="bg-orange-200 p-5 flex-auto">
-    @yield('content')
+    <header class="flex justify-between border-b border-gray-700 py-3 mb-3 bg-blue-200">
+        <h1 class="font-bold">@yield('title')</h1>
+        <div>
+            @yield('actions')
+        </div>
+    </header>
+    <main class="">
+        @yield('content')
+    </main>
 </main>
 <script src="{{ mix("js/app.js") }}"></script>
 </body>
