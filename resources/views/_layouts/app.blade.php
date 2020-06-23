@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/png" href="{{ asset("favicon.png") }}">
     <title>{{ config('app.name', 'True Blue software') }}</title>
-
+    @livewireStyles
     <link rel="stylesheet" href="{{ mix("css/app.css") }}">
 </head>
 <body class="h-full flex items-stretch">
@@ -38,6 +38,7 @@
         @yield('content')
     </main>
 </main>
+@livewireScripts
 <script src="{{ mix("js/app.js") }}"></script>
 </body>
 </html>

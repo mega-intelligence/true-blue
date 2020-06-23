@@ -13,5 +13,5 @@
 
 
 @section('content')
-
+    @livewire('common.input')
 @endsection
