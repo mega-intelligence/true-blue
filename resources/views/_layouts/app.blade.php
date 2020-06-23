@@ -19,7 +19,7 @@
     @auth
         <form class="pb-3" action="{{ route('logout') }}">
             @csrf
-            <button>@lang('gui.logout')</button>
+            <button class="btn">@lang('gui.logout')</button>
         </form>
         <hr class="border-gray-700">
     @endauth
