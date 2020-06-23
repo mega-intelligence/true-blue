@@ -14,4 +14,11 @@ class WarehouseController extends Controller
 
         return view('backend.warehouse.index');
     }
+
+    public function create()
+    {
+        activatePage('backend.warehouse.index');
+
+        return view('backend.warehouse.create');
+    }
 }
