@@ -11,7 +11,6 @@
     @lang('gui.warehouses')
 @endsection
 
-
 @section('content')
-    @livewire('common.input')
+    @livewire('common.input' , ['name' => 'name', 'service' => \App\Services\WarehouseService::class])
 @endsection
