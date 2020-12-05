@@ -14,6 +14,8 @@ class OrderService extends Service
         "is_draft" => "nullable|boolean",
     ];
 
+    protected $modelClass = Order::class;
+
     /**
      * OrderService constructor.
      * @param Order|null $order
@@ -35,11 +37,7 @@ class OrderService extends Service
      */
     public function create(array $attributes): Service
     {
-        $validated = $this->validate($attributes);
-
-        $newOrder = Order::create($validated);
-
-        $this->setModel($newOrder);
+        parent::create($attributes);
 
         $this->generateReference();
 

@@ -17,21 +17,20 @@ class VatService extends Service
         "is_default" => "nullable|boolean",
     ];
 
+    protected $modelClass = Vat::class;
+
     /**
      * creates and selects a new model
      * @param array $attributes
      * @return VatService
      * @throws ValidationException
+     * @throws Exception
      */
     public function create(array $attributes): Service
     {
-        $validated = $this->validate($attributes);
+        parent::create($attributes);
 
-        $vat = Vat::create($validated);
-
-        $this->setModel($vat);
-
-        if (array_key_exists("is_default", $validated) && $validated["is_default"] === true) {
+        if (array_key_exists("is_default", $attributes) && $attributes["is_default"] === true) {
             $this->setAsDefault();
         }
 

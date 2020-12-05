@@ -18,22 +18,8 @@ class WarehouseService extends Service
         "name" => "required|string|max:128",
     ];
 
-    /**
-     * creates and selects a new model
-     * @param array $attributes
-     * @return WarehouseService
-     * @throws ValidationException
-     */
-    public function create(array $attributes): Service
-    {
-        $validated = $this->validate($attributes);
+    protected $modelClass = Warehouse::class;
 
-        $warehouse = Warehouse::create($validated);
-
-        $this->setModel($warehouse);
-
-        return $this;
-    }
 
     /**
      * Gets the available quantity of a product in the selected warehouse

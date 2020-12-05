@@ -11,6 +11,9 @@ use Illuminate\Validation\ValidationException;
 
 class ProductService extends SellableService
 {
+
+    protected $modelClass = Product::class;
+
     /**
      * ProductService constructor.
      * @param Product|null $product

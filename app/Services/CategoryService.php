@@ -6,9 +6,7 @@ namespace App\Services;
 
 use App\Models\Category;
 use App\Models\Product;
-use App\Models\Sellable;
 use Exception;
-use Illuminate\Container\Container;
 use Illuminate\Validation\ValidationException;
 
 class CategoryService extends Service
@@ -17,6 +15,8 @@ class CategoryService extends Service
         "name"        => "required|string|max:128",
         "category_id" => "nullable|different:id|exists:categories,id",
     ];
+
+    protected $modelClass = Category::class;
 
     /**
      * CategoryService constructor.
@@ -29,22 +29,6 @@ class CategoryService extends Service
         }
     }
 
-    /**
-     * creates and selects a new model
-     * @param array $attributes
-     * @return CategoryService
-     * @throws ValidationException
-     */
-    public function create(array $attributes): Service
-    {
-        $validated = $this->validate($attributes);
-
-        $category = Category::create($validated);
-
-        $this->setModel($category);
-
-        return $this;
-    }
 
     /**
      * @param Product $product

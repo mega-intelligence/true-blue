@@ -21,6 +21,8 @@ abstract class Service
      */
     protected $validationRules = null;
 
+    protected $modelClass = null;
+
     /**
      * Alias for the setModel function
      * @param Model $model
@@ -57,8 +59,21 @@ abstract class Service
      * creates and selects a new model
      * @param array $attributes
      * @return Service
+     * @throws ValidationException
+     * @throws Exception
      */
-    abstract public function create(array $attributes): Service;
+    public function create(array $attributes): Service
+    {
+        $this->modelClassOrFail();
+
+        $validated = $this->validate($attributes);
+
+        $model = resolve($this->modelClass);
+
+        $this->setModel($model->create($validated));
+
+        return $this;
+    }
 
     /**
      * updates currently selected model
@@ -149,6 +164,16 @@ abstract class Service
     {
         if (is_null($this->model))
             throw new Exception('Model for this service is not set, use for($model) or setModel($model) to set a target model.');
+    }
+
+    /**
+     * Checks if a model is selected before any model specific operation, if not, it throws an exception
+     * @throws Exception
+     */
+    protected function modelClassOrFail()
+    {
+        if (is_null($this->modelClass))
+            throw new Exception('ModelClass for this service is not set, Set the protected property $modelClass to the full class name for the targeted model');
     }
 
     /**
