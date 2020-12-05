@@ -5,7 +5,7 @@ namespace App\Services;
 
 
 use App\Exceptions\OrderReferenceAlreadyGeneratedException;
-use App\Order;
+use App\Models\Order;
 use Illuminate\Validation\ValidationException;
 
 class OrderService extends Service

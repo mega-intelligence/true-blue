@@ -17,5 +17,7 @@ Route::get('/', function () {
     return redirect()->route('backend.dashboard');
 });
 
-Auth::routes();
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');

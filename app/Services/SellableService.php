@@ -4,8 +4,8 @@
 namespace App\Services;
 
 
-use App\Category;
-use App\Vat;
+use App\Models\Category;
+use App\Models\Vat;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;

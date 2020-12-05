@@ -5,7 +5,7 @@ namespace App\Services;
 
 
 use App\Exceptions\NoDefaultVatException;
-use App\Vat;
+use App\Models\Vat;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;

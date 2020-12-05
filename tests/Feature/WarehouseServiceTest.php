@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Exceptions\NegativeWarehouseQuantityException;
 use App\Services\ProductService;
 use App\Services\WarehouseService;
-use App\Warehouse;
+use App\Models\Warehouse;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Config;

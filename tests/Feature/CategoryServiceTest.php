@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Category;
+use App\Models\Category;
 use App\Services\CategoryService;
 use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;

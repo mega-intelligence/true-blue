@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Product;
-use App\Sellable;
+use App\Models\Product;
+use App\Models\Sellable;
 use App\Services\ProductService;
 use App\Services\VatService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

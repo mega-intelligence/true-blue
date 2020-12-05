@@ -4,9 +4,9 @@
 namespace App\Services;
 
 
-use App\Category;
-use App\Product;
-use App\Sellable;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Sellable;
 use Exception;
 use Illuminate\Container\Container;
 use Illuminate\Validation\ValidationException;
