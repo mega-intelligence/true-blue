@@ -45,9 +45,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
-        $this->mapBackendWebRoutes();
 
-        //
+        $this->mapBackendWebRoutes();
     }
 
     /**

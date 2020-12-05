@@ -17,5 +17,3 @@ Route::get('/', function () {
     return redirect()->route('backend.dashboard');
 });
 
-Auth::routes();
-

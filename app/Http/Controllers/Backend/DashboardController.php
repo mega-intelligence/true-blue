@@ -11,8 +11,6 @@ class DashboardController extends Controller
 
     public function dashboard()
     {
-        activatePage('backend.dashboard');
-
         return view('backend.dashboard');
     }
 }
