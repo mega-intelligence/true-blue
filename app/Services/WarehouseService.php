@@ -5,8 +5,8 @@ namespace App\Services;
 
 
 use App\Exceptions\NegativeWarehouseQuantityException;
-use App\Product;
-use App\Warehouse;
+use App\Models\Product;
+use App\Models\Warehouse;
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\ValidationException;

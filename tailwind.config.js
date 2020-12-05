@@ -1,8 +1,23 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
-    purge: [],
+    purge: [
+        './vendor/laravel/jetstream/**/*.blade.php',
+        './storage/framework/views/*.php',
+        './resources/views/**/*.blade.php',
+    ],
+
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+            },
+        },
     },
-    variants: {},
-    plugins: [],
-}
+
+    variants: {
+        opacity: ['responsive', 'hover', 'focus', 'disabled'],
+    },
+
+    plugins: [require('@tailwindcss/ui')],
+};

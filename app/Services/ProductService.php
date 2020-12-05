@@ -4,8 +4,8 @@
 namespace App\Services;
 
 
-use App\Product;
-use App\Sellable;
+use App\Models\Product;
+use App\Models\Sellable;
 use Exception;
 use Illuminate\Validation\ValidationException;
 

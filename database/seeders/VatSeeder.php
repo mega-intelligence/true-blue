@@ -1,6 +1,8 @@
 <?php
 
-use App\Vat;
+namespace Database\Seeders;
+
+use App\Models\Vat;
 use Illuminate\Database\Seeder;
 
 class VatSeeder extends Seeder

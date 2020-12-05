@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use App\Exceptions\NoDefaultVatException;
 use App\Services\VatService;
-use App\Vat;
+use App\Models\Vat;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
