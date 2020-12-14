@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Category;
 use App\Models\Product;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\ValidationException;
 
 class CategoryService extends Service
@@ -99,6 +100,14 @@ class CategoryService extends Service
         (new CategoryService($category))->setParentCategory($this->getModel());
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRootCategories(): ?Collection
+    {
+        return Category::whereNull('category_id')->get();
     }
 
     /**
