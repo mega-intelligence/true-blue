@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Category extends Model
+class Category extends Model implements Sortable
 {
+    public const ROOT_CATEGORY_VALUE = -1;
+
+    use SortableTrait;
+
     protected $fillable = ["category_id", "name"];
 
     public function sellables()
@@ -25,6 +31,31 @@ class Category extends Model
 
     public function categories()
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(Category::class)->ordered();
     }
+
+    public function buildSortQuery()
+    {
+        return static::query()->where('category_id', $this->category_id);
+    }
+
+    public function getLowestOrderNumber(): int
+    {
+        return (int)$this->buildSortQuery()->min($this->determineOrderColumnName());
+    }
+
+    public function isLastInOrder(): bool
+    {
+        $orderColumnName = $this->determineOrderColumnName();
+
+        return $this->$orderColumnName === $this->getHighestOrderNumber();
+    }
+
+    public function isFirstInOrder(): bool
+    {
+        $orderColumnName = $this->determineOrderColumnName();
+
+        return $this->$orderColumnName === $this->getLowestOrderNumber();
+    }
+
 }

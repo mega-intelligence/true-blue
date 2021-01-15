@@ -63,9 +63,14 @@ class CategoryService extends Service
      * @throws ValidationException
      * @throws Exception
      */
-    public function setParentCategory(Category $parentCategory): CategoryService
+    public function setParentCategory(?Category $parentCategory): CategoryService
     {
         $this->modelOrFail();
+
+        if (is_null($parentCategory)) {
+            $this->setAsRootCategory();
+            return $this;
+        }
 
         $parentCategory = $this->validateParentCategory($parentCategory);
 
@@ -107,7 +112,7 @@ class CategoryService extends Service
      */
     public function getRootCategories(): ?Collection
     {
-        return Category::whereNull('category_id')->get();
+        return Category::whereNull('category_id')->ordered()->get();
     }
 
     /**

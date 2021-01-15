@@ -8,10 +8,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                @foreach((new \App\Services\CategoryService())->getRootCategories() as $category)
-                    <x-category.recursive-list-item :category="$category"/>
-                @endforeach
+                <livewire:category.recursive-list/>
             </div>
         </div>
     </div>
+
+
 </x-app-layout>
