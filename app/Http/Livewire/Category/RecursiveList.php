@@ -36,4 +36,16 @@ class RecursiveList extends Component
 
         $this->message = "moving $direction";
     }
+
+    public function saveCategoryNameChange(Category $category, $newName, CategoryService $categoryService)
+    {
+        if ($category->name === $newName) {
+            return;
+        }
+
+        $categoryService->for($category)->update(['name' => $newName]);
+        $category->fresh();
+        $this->message = "changed category {$category->id} name to {$category->name} " . time();
+        $this->emit('saved');
+    }
 }

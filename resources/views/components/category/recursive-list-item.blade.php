@@ -1,9 +1,10 @@
 @props(['category'])
 <div class="pl-4  py-1">
     <div class="border rounded shadow p-2 flex justify-between">
-        <span>
-            {{ $category->name }} <sup>({{ $category->id }})</sup>
-        </span>
+        <input x-data="{}" class="border px-2 py-1 rounded flex-1 mr-2" type="text" value="{{ $category->name }}"
+               wire:keydown.enter="saveCategoryNameChange({{ $category->id }}, $event.target.value)"
+               @keydown.enter="$event.target.blur()"
+        >
         <div class="flex items-center">
             <label for="parent-category" class="text-xs">
                 <span>Parent category</span>
