@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Exceptions\CanNotAssignCategoryAsParentToItSelfException;
 use App\Models\Category;
 use App\Services\CategoryService;
 use Exception;
@@ -198,5 +199,60 @@ class CategoryServiceTest extends TestCase
         $category->id = $NON_EXISTING_CATEGORY_ID;
 
         $this->categoryService->setParentCategory($category);
+    }
+
+    public function testSetsCategoryAsRootWhenNoParentIsProvided()
+    {
+        $rootCategoryService = $this->categoryService->create([
+            "name" => "Category 1",
+        ]);
+
+        $this->categoryService = new CategoryService();
+
+        $childCategoryService = $this->categoryService->create([
+            "name" => "Category 2",
+        ]);
+
+        $childCategoryService->setParentCategory($rootCategoryService->getModel());
+
+        self::assertEquals($rootCategoryService->getModel()->id, $childCategoryService->getModel()->category_id);
+
+        $childCategoryService->setParentCategory(null);
+
+        self::assertNull($childCategoryService->getModel()->category_id);
+    }
+
+    public function testCanNotAssignCategoryAsParentOfItSelf()
+    {
+        $this->expectException(CanNotAssignCategoryAsParentToItSelfException::class);
+
+        $rootCategoryService = $this->categoryService->create([
+            "name" => "Category 1",
+        ]);
+
+        $rootCategoryService->setParentCategory($rootCategoryService->getModel());
+
+    }
+
+    public function testGetAllRootCategories()
+    {
+        $rootCategory1 = $this->categoryService->create([
+            "name" => "Category 1",
+        ])->getModel();
+
+        $rootCategory2 = $this->categoryService->create([
+            "name" => "Category 2",
+        ])->getModel();
+
+        $this->categoryService = new CategoryService();
+
+        $childCategoryService = $this->categoryService->create([
+            "name" => "Category 3",
+        ]);
+
+        $this->categoryService->setParentCategory($rootCategory1);
+
+        $this->assertEquals(2, $this->categoryService->getRootCategories()->count());
+
     }
 }

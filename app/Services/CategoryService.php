@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Exceptions\CanNotAssignCategoryAsParentToItSelfException;
 use App\Models\Category;
 use App\Models\Product;
 use Exception;
@@ -70,6 +71,10 @@ class CategoryService extends Service
         if (is_null($parentCategory)) {
             $this->setAsRootCategory();
             return $this;
+        }
+
+        if ($this->getModel()->id === $parentCategory->id) {
+            throw new CanNotAssignCategoryAsParentToItSelfException();
         }
 
         $parentCategory = $this->validateParentCategory($parentCategory);
