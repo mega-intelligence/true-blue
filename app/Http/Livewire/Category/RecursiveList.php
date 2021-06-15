@@ -48,4 +48,20 @@ class RecursiveList extends Component
         $this->message = "changed category {$category->id} name to {$category->name} " . time();
         $this->emit('saved');
     }
+
+    public function createNewCategory(CategoryService $categoryService)
+    {
+        $categoryService->create(['name' => config('trueblue.default_new_category_name')]);
+
+        $categoryService->getModel()->moveToStart();
+
+        $this->emit('saved');
+    }
+
+    public function removeCategory(Category $category, CategoryService $categoryService)
+    {
+        $categoryService->for($category)->deleteAndKeepChildren();
+
+        $this->emit('saved');
+    }
 }

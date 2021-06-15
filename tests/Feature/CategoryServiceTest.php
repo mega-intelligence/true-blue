@@ -255,4 +255,34 @@ class CategoryServiceTest extends TestCase
         $this->assertEquals(2, $this->categoryService->getRootCategories()->count());
 
     }
+
+    public function testDeleteAndKeepChildrenAsRootCategories()
+    {
+        $rootCategory = $this->categoryService->create([
+            "name" => "Category 1",
+        ])->getModel();
+
+        $firstChildCategory = $this->categoryService->create([
+            "name" => "Category 1.1",
+        ])->getModel();
+
+        $secondLevelChildCategory = $this->categoryService->create([
+            "name" => "Category 1.1.1",
+        ])->getModel();
+
+        $this->categoryService->for($firstChildCategory)->setParentCategory($rootCategory);
+        $this->categoryService->for($secondLevelChildCategory)->setParentCategory($firstChildCategory);
+
+        $this->categoryService->for($firstChildCategory)->deleteAndKeepChildren();
+
+        $secondLevelChildCategory = Category::find($secondLevelChildCategory->id);
+
+        self::assertEquals($rootCategory->id, $secondLevelChildCategory->category_id);
+
+        $this->categoryService->for($rootCategory)->deleteAndKeepChildren();
+
+        $secondLevelChildCategory = Category::find($secondLevelChildCategory->id);
+
+        self::assertNull($secondLevelChildCategory->category_id);
+    }
 }

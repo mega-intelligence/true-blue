@@ -121,6 +121,22 @@ class CategoryService extends Service
     }
 
     /**
+     * Delete current category, and reassign children to its parent category if exists or set them as root if not
+     * @return bool
+     * @throws ValidationException
+     */
+    public function deleteAndKeepChildren()
+    {
+        $this->modelOrFail();
+
+        foreach ($this->getModel()->categories as $subCategory) {
+            (new CategoryService($subCategory))->setParentCategory($this->getModel()->category);
+        }
+
+        return $this->getModel()->delete();
+    }
+
+    /**
      * Validates only the category id
      * @param Category $parentCategory
      * @return Category

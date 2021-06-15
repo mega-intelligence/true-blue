@@ -33,6 +33,11 @@
                     &uparrow;
                 </button>
             @endif
+
+            <button class="px-2 border rounded text-gray-100 bg-gray-800"
+                    wire:click="removeCategory({{$category->id}})">
+                &times;
+            </button>
         </div>
     </div>
     @foreach($category->categories as $subCategory)
