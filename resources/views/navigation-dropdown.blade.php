@@ -21,6 +21,11 @@
                                     :active="request()->routeIs('backend.category.index')">
                         {{ __('Categories') }}
                     </x-jet-nav-link>
+
+                    <x-jet-nav-link href="{{ route('backend.product.index') }}"
+                                    :active="request()->routeIs('backend.product.index')">
+                        {{ __('Products') }}
+                    </x-jet-nav-link>
                 </div>
             </div>
 
